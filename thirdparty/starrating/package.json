@@ -1,0 +1,19 @@
+{
+	"name": "starrating",
+	"version": "1.0.0",
+	"description": "Star Rating for Hotels",
+	"scripts": {
+		"start": "node app.js"
+	},
+	"dependencies": {
+		"express": "4.12.x",
+		"cfenv": "1.0.x",
+		"ibm_db": "*",
+		"underscore": "*",
+		"cors": "*"
+	},
+	"repository": {},
+	"engines": {
+		"node": "*"
+	}
+}

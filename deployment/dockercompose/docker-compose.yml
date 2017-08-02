@@ -1,0 +1,52 @@
+version: '3'
+services:
+  redis:
+    image: "redis:alpine"
+    ports:
+      - 9001:6379
+    volumes:
+      - /Users/admin/Documents/ISL/Code/Bluemix/microservices/hotels.com/others/deployment/dockercompose:/data  
+  locationquery-service:
+    build: ../../../locationquery
+    image: hotels.com/locationquery-service
+    ports:
+      - 9002:9002
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PORT=9002
+    links:
+      - "redis"
+  hotelquery-service:
+    build: ../../../hotelquery
+    image: hotels.com/hotelquery-service
+    ports:
+      - 9003:9003
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PORT=9003
+    links:
+      - "redis"    
+  dealsquery-service:
+    build: ../../../dealsquery
+    image: hotels.com/dealsquery-service
+    ports:
+      - 9004:9004
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PORT=9004
+    links:
+      - "redis"         
+  controller:
+    build: ../../../controller
+    image: hotels.com/controller
+    ports:
+      - 9101:9101
+    environment:
+      - PORT=9101      
+    links:
+      - "locationquery-service"
+      - "hotelquery-service"
+      - "dealsquery-service"
